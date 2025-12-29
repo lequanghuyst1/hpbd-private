@@ -10,15 +10,15 @@ import { EffectCards, Pagination } from "swiper/modules";
 const feedbackList = [
   {
     id: 1,
-    image: "/2.jpg",
+    image: "/image/image1.jpg",
   },
   {
     id: 2,
-    image: "/1.jpg",
+    image: "/image/image2.jpg",
   },
   {
     id: 3,
-    image: "/3.jpg",
+    image: "/image/image3.jpg",
   },
   // Thêm các feedback khác nếu cần
 ];
@@ -39,9 +39,9 @@ const CardAnimation = () => {
     >
       {feedbackList.map((feedback) => (
         <SwiperSlide key={feedback.id} className="">
-          <div className="flex flex-col items-center bg-white p-4 shadow-lg h-[320px] md:h-[500px] lg:h-[560px]">
+          <div className="flex flex-col items-center bg-white p-2 shadow-lg h-[320px] md:h-[500px] lg:h-[560px] rounded-[8px]">
             <div className="relative w-full h-full">
-              <div className="relative w-full h-full aspect-[3/4]">
+              <div className="relative w-full h-full aspect-[3/4] rounded-[8px] overflow-hidden">
                 <Image
                   src={feedback.image}
                   fill

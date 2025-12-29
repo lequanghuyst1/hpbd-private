@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useMemo, useEffect, useState } from "react";
 import Image from "next/image";
 import CakeSvg from "@/components/CakeSvg";
 import CandleSvg from "@/components/CandleSvg";
@@ -18,11 +18,68 @@ type CakeWithCandlesProps = {
   resolvedTheme: string | undefined;
 };
 
+// Memoized Candle component để tránh re-render không cần thiết
+const Candle = memo(
+  ({
+    candle,
+    resolvedTheme,
+    fireAnimationData,
+  }: {
+    candle: CandlePosition;
+    resolvedTheme: string | undefined;
+    fireAnimationData: any;
+  }) => (
+    <div
+      key={candle.id}
+      className="absolute"
+      style={{
+        left: `${candle.x}%`,
+        top: `${candle.y}%`,
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <div className="relative w-4 md:w-6">
+        <CandleSvg hideFlameHeight={50} />
+        {resolvedTheme === "dark" && fireAnimationData && (
+          <FireAnimation animationData={fireAnimationData} />
+        )}
+      </div>
+    </div>
+  )
+);
+
+Candle.displayName = "Candle";
+
 const CakeWithCandles = memo(function CakeWithCandles({
   candles,
   onCakeClick,
   resolvedTheme,
 }: CakeWithCandlesProps) {
+  // Load Fire.json MỘT LẦN duy nhất cho tất cả nến
+  const [fireAnimationData, setFireAnimationData] = useState<any>(null);
+
+  useEffect(() => {
+    // Chỉ load khi ở dark mode
+    if (resolvedTheme === "dark" && !fireAnimationData) {
+      fetch("/Fire.json")
+        .then((res) => res.json())
+        .then((data) => setFireAnimationData(data))
+        .catch((err) => console.error("Error loading fire animation:", err));
+    }
+  }, [resolvedTheme, fireAnimationData]);
+
+  // Memoize danh sách nến để tránh re-render
+  const renderedCandles = useMemo(() => {
+    return candles.map((candle) => (
+      <Candle
+        key={candle.id}
+        candle={candle}
+        resolvedTheme={resolvedTheme}
+        fireAnimationData={fireAnimationData}
+      />
+    ));
+  }, [candles, resolvedTheme, fireAnimationData]);
+
   return (
     <div className="relative flex flex-col items-center gap-8">
       {/* Mũi tên trỏ vào bánh kem (từ trên xuống) */}
@@ -65,22 +122,7 @@ const CakeWithCandles = memo(function CakeWithCandles({
         onClick={onCakeClick ? onCakeClick : undefined}
       >
         {/* Render các cây nến đã được thêm */}
-        {candles.map((candle) => (
-          <div
-            key={candle.id}
-            className="absolute"
-            style={{
-              left: `${candle.x}%`,
-              top: `${candle.y}%`,
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <div className="relative w-4 md:w-6">
-              <CandleSvg hideFlameHeight={50} />
-              {resolvedTheme === "dark" && <FireAnimation />}
-            </div>
-          </div>
-        ))}
+        {renderedCandles}
       </div>
     </div>
   );

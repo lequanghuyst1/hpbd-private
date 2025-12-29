@@ -8,7 +8,7 @@ export default function BackgroundMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const trackRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const [volume, setVolume] = useState(70); // 0 - 100
+  const [volume, setVolume] = useState(15); // 0 - 100
 
   // Initialize Web Audio API khi audio element sẵn sàng
   useEffect(() => {
@@ -36,9 +36,7 @@ export default function BackgroundMusic() {
 
       // Set volume ban đầu
       gainNode.gain.value = volume / 100;
-
-    } catch (error) {
-    }
+    } catch (error) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -47,8 +45,7 @@ export default function BackgroundMusic() {
     if (audioContextRef.current?.state === "suspended") {
       try {
         await audioContextRef.current.resume();
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   };
 
@@ -69,8 +66,7 @@ export default function BackgroundMusic() {
 
       try {
         await audioRef.current.play();
-      } catch (error) {
-      }
+      } catch (error) {}
     };
 
     // Try to play immediately
@@ -82,8 +78,7 @@ export default function BackgroundMusic() {
       if (audioRef.current && audioRef.current.paused) {
         try {
           await audioRef.current.play();
-        } catch (error) {
-        }
+        } catch (error) {}
       }
     };
 

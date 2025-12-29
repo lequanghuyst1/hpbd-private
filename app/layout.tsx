@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description: "Chúc mừng sinh nhật Trang",
     images: [
       {
-        url: "/2.jpg",
+        url: "/image/image2.jpg",
         width: 1200,
         height: 630,
         alt: "Nguyễn Thị Thu Trang - 30/12",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Nguyễn Thị Thu Trang - 30/12",
     description: "Chúc mừng sinh nhật Trang",
-    images: ["/2.jpg"],
+    images: ["/image/image2.jpg"],
   },
 };
 

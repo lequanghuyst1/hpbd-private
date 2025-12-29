@@ -1,18 +1,13 @@
 "use client";
 
 import Lottie from "lottie-react";
-import { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 
-export default function FireAnimation() {
-  const [animationData, setAnimationData] = useState(null);
+type FireAnimationProps = {
+  animationData: any;
+};
 
-  useEffect(() => {
-    fetch("/Fire.json")
-      .then((res) => res.json())
-      .then((data) => setAnimationData(data))
-      .catch(() => {});
-  }, []);
-
+function FireAnimation({ animationData }: FireAnimationProps) {
   // Memoize animation data để tránh re-render không cần thiết
   const memoizedData = useMemo(() => animationData, [animationData]);
 
@@ -38,3 +33,5 @@ export default function FireAnimation() {
     </div>
   );
 }
+
+export default React.memo(FireAnimation);
