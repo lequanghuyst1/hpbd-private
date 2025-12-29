@@ -187,7 +187,7 @@ export default function Page2() {
   // Force dark mode on initial mount (only once)
   useEffect(() => {
     if (!hasSetInitialTheme.current) {
-      setTheme("dark");
+      setTheme("light");
       hasSetInitialTheme.current = true;
     }
   }, [setTheme]);
