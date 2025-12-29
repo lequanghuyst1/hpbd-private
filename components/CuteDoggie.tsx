@@ -170,7 +170,7 @@ export default function CuteDoggie() {
                 <div>
                   <TextType
                     key={`phase-3-line1-${textKey}`}
-                    text="Chúc chị Trang tuổi mới"
+                    text="Chúc Thu Chan tuổi mới"
                     as="span"
                     className=""
                     typingSpeed={50}
@@ -188,7 +188,7 @@ export default function CuteDoggie() {
                     as="span"
                     className=""
                     typingSpeed={50}
-                    initialDelay={"Chúc chị Trang tuổi mới".length * 50}
+                    initialDelay={"Chúc Thu Chan tuổi mới".length * 50}
                     pauseDuration={3000}
                     loop={false}
                     showCursor={true}

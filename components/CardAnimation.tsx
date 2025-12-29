@@ -38,10 +38,10 @@ const CardAnimation = () => {
       }}
     >
       {feedbackList.map((feedback) => (
-        <SwiperSlide key={feedback.id} className="">
+        <SwiperSlide key={feedback.id} className="rounded-[8px]">
           <div className="flex flex-col items-center bg-white p-2 shadow-lg h-[320px] md:h-[500px] lg:h-[560px] rounded-[8px]">
             <div className="relative w-full h-full">
-              <div className="relative w-full h-full aspect-[3/4] rounded-[8px] overflow-hidden">
+              <div className="relative w-full h-full rounded-[8px] overflow-hidden">
                 <Image
                   src={feedback.image}
                   fill

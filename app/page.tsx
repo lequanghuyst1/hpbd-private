@@ -16,7 +16,7 @@ export default function Home() {
 
         {/* Nội dung */}
         <main className="relative z-10 flex h-full items-start justify-center">
-          <CurvedLoop marqueeText="Happy Birthday! Chúc chị Trang tuổi mới zui zẻ! " />
+          <CurvedLoop marqueeText="Happy Birthday! Chúc Thu Chan tuổi mới vui vẻ! " />
         </main>
 
         {/* Slide Button ở giữa màn hình */}

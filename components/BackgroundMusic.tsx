@@ -8,7 +8,7 @@ export default function BackgroundMusic() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const trackRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const [volume, setVolume] = useState(25); // 0 - 100
+  const [volume, setVolume] = useState(20); // 0 - 100
 
   // Initialize Web Audio API khi audio element sẵn sàng
   useEffect(() => {
