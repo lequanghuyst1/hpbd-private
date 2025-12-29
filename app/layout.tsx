@@ -16,24 +16,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trần Thảo Quyên - 10/12",
-  description: "Chúc mừng sinh nhật Quyên",
+  title: "Nguyễn Thị Thu Trang - 30/12",
+  description: "Chúc mừng sinh nhật Trang",
   openGraph: {
-    title: "Trần Thảo Quyên - 10/12",
-    description: "Chúc mừng sinh nhật Quyên",
+    title: "Nguyễn Thị Thu Trang - 30/12",
+    description: "Chúc mừng sinh nhật Trang",
     images: [
       {
         url: "/2.jpg",
         width: 1200,
         height: 630,
-        alt: "Trần Thảo Quyên - 10/12",
+        alt: "Nguyễn Thị Thu Trang - 30/12",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trần Thảo Quyên - 10/12",
-    description: "Chúc mừng sinh nhật Quyên",
+    title: "Nguyễn Thị Thu Trang - 30/12",
+    description: "Chúc mừng sinh nhật Trang",
     images: ["/2.jpg"],
   },
 };

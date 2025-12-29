@@ -67,7 +67,7 @@ export default function CuteDoggie() {
   // Tự động chuyển từ phase 2 sang phase 3 sau khi typing xong
   useEffect(() => {
     if (phase === 2) {
-      // Ước tính thời gian typing: "Há lu, Tuấn nè !" có khoảng 15 ký tự
+      // Ước tính thời gian typing: "Há lu, Huy nè !" có khoảng 15 ký tự
       // typingSpeed = 50ms, pauseDuration = 1000ms (giảm từ 2000ms)
       // Tổng thời gian: 15 * 50 + 1000 = 1750ms
       const typingTime = "Há lu, Huy nè !".length * 50;
