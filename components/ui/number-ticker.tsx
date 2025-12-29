@@ -49,8 +49,8 @@ export function NumberTicker({
             maximumFractionDigits: decimalPlaces,
           }).format(Number(latest.toFixed(decimalPlaces)));
 
-          // Kiểm tra nếu đã đạt giá trị cuối (với tolerance nhỏ)
-          const completed = Math.abs(latest - value) < 0.01;
+          // Kiểm tra nếu đã đạt giá trị cuối (tăng tolerance để dấu + xuất hiện sớm hơn)
+          const completed = Math.abs(latest - value) < 0.5;
 
           // Append dấu + nếu hoàn thành
           ref.current.textContent = formattedNumber + (completed ? "+" : "");
