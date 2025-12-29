@@ -115,7 +115,10 @@ export default function CuteDoggie() {
       >
         <div
           className="absolute -top-50 left-1/2 -translate-x-1/2"
-          style={{ width: "max-content", maxWidth: "min(600px, calc(100vw - 40px))" }}
+          style={{
+            width: "max-content",
+            maxWidth: "min(600px, calc(100vw - 40px))",
+          }}
         >
           <div className="relative bg-white rounded-[40px] px-5 py-3 shadow-lg border-2 border-pink-300">
             {phase === 1 ? (
@@ -170,11 +173,11 @@ export default function CuteDoggie() {
                 <div>
                   <TextType
                     key={`phase-3-line1-${textKey}`}
-                    text="Chúc Thu Chan tuổi mới vui vẻ."
+                    text="Chúc Thu Chan tuổi mới"
                     as="span"
                     className=""
                     typingSpeed={50}
-                    pauseDuration={500}
+                    pauseDuration={0}
                     loop={false}
                     showCursor={false}
                     variableSpeed={undefined}
@@ -184,68 +187,11 @@ export default function CuteDoggie() {
                 <div>
                   <TextType
                     key={`phase-3-line2-${textKey}`}
-                    text="Mong chị quan tâm sức khoẻ hơn"
+                    text="vui vẻ nhé!"
                     as="span"
                     className=""
                     typingSpeed={50}
-                    initialDelay={"Chúc Thu Chan tuổi mới vui vẻ.".length * 50 + 500}
-                    pauseDuration={0}
-                    loop={false}
-                    showCursor={false}
-                    variableSpeed={undefined}
-                    onSentenceComplete={undefined}
-                  />
-                </div>
-                <div>
-                  <TextType
-                    key={`phase-3-line3-${textKey}`}
-                    text="và không bỏ bữa."
-                    as="span"
-                    className=""
-                    typingSpeed={50}
-                    initialDelay={
-                      ("Chúc Thu Chan tuổi mới vui vẻ.".length * 50 + 500) +
-                      ("Mong chị quan tâm sức khoẻ hơn".length * 50)
-                    }
-                    pauseDuration={500}
-                    loop={false}
-                    showCursor={false}
-                    variableSpeed={undefined}
-                    onSentenceComplete={undefined}
-                  />
-                </div>
-                <div>
-                  <TextType
-                    key={`phase-3-line4-${textKey}`}
-                    text="Mong cuộc sống nhẹ nhàng hơn với chị"
-                    as="span"
-                    className=""
-                    typingSpeed={50}
-                    initialDelay={
-                      ("Chúc Thu Chan tuổi mới vui vẻ.".length * 50 + 500) +
-                      ("Mong chị quan tâm sức khoẻ hơn".length * 50) +
-                      ("và không bỏ bữa.".length * 50 + 500)
-                    }
-                    pauseDuration={0}
-                    loop={false}
-                    showCursor={false}
-                    variableSpeed={undefined}
-                    onSentenceComplete={undefined}
-                  />
-                </div>
-                <div>
-                  <TextType
-                    key={`phase-3-line5-${textKey}`}
-                    text="và mong chị dịu dàng hơn với cuộc đời."
-                    as="span"
-                    className=""
-                    typingSpeed={50}
-                    initialDelay={
-                      ("Chúc Thu Chan tuổi mới vui vẻ.".length * 50 + 500) +
-                      ("Mong chị quan tâm sức khoẻ hơn".length * 50) +
-                      ("và không bỏ bữa.".length * 50 + 500) +
-                      ("Mong cuộc sống nhẹ nhàng hơn với chị".length * 50)
-                    }
+                    initialDelay={"Chúc Thu Chan tuổi mới".length * 50}
                     pauseDuration={3000}
                     loop={false}
                     showCursor={true}
