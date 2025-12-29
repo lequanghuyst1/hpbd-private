@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { ComponentPropsWithoutRef, useEffect, useRef } from "react"
-import { useInView, useMotionValue, useSpring } from "motion/react"
+import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react";
+import { useInView, useMotionValue, useSpring } from "motion/react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
-  value: number
-  startValue?: number
-  direction?: "up" | "down"
-  delay?: number
-  decimalPlaces?: number
+  value: number;
+  startValue?: number;
+  direction?: "up" | "down";
+  delay?: number;
+  decimalPlaces?: number;
 }
 
 export function NumberTicker({
@@ -22,35 +22,46 @@ export function NumberTicker({
   decimalPlaces = 0,
   ...props
 }: NumberTickerProps) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const motionValue = useMotionValue(direction === "down" ? value : startValue)
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(direction === "down" ? value : startValue);
   const springValue = useSpring(motionValue, {
     damping: 60,
     stiffness: 100,
-  })
-  const isInView = useInView(ref, { once: true, margin: "0px" })
+  });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     if (isInView) {
       const timer = setTimeout(() => {
-        motionValue.set(direction === "down" ? startValue : value)
-      }, delay * 1000)
-      return () => clearTimeout(timer)
+        motionValue.set(direction === "down" ? startValue : value);
+      }, delay * 1000);
+      return () => clearTimeout(timer);
     }
-  }, [motionValue, isInView, delay, value, direction, startValue])
+  }, [motionValue, isInView, delay, value, direction, startValue]);
 
   useEffect(
     () =>
       springValue.on("change", (latest) => {
         if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat("en-US", {
+          const formattedNumber = Intl.NumberFormat("en-US", {
             minimumFractionDigits: decimalPlaces,
             maximumFractionDigits: decimalPlaces,
-          }).format(Number(latest.toFixed(decimalPlaces)))
+          }).format(Number(latest.toFixed(decimalPlaces)));
+
+          // Kiểm tra nếu đã đạt giá trị cuối (với tolerance nhỏ)
+          const completed = Math.abs(latest - value) < 0.01;
+
+          // Append dấu + nếu hoàn thành
+          ref.current.textContent = formattedNumber + (completed ? "+" : "");
+
+          if (completed && !isCompleted) {
+            setIsCompleted(true);
+          }
         }
       }),
-    [springValue, decimalPlaces]
-  )
+    [springValue, decimalPlaces, value, isCompleted]
+  );
 
   return (
     <span
@@ -60,8 +71,6 @@ export function NumberTicker({
         className
       )}
       {...props}
-    >
-      {startValue}
-    </span>
-  )
+    ></span>
+  );
 }
