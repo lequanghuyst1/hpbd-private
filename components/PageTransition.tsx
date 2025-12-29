@@ -122,7 +122,7 @@ export default function PageTransition({
                     delay: phase === "closed" ? 0.2 : 0,
                   }}
                 >
-                  made by Lê Quang Huy
+                  Made by Lê Quang Huy
                 </motion.p>
               </motion.div>
             )}
