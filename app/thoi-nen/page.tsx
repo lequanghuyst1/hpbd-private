@@ -65,10 +65,19 @@ export default function Page2() {
   const [candles] = useState<CandlePosition[]>(generateInitialCandles());
   const [showBlowSuccess, setShowBlowSuccess] = useState(false);
   const [isBlowConfirmed, setIsBlowConfirmed] = useState(true); // Cho phép thổi lần đầu
+  const [showContent, setShowContent] = useState(false); // Delay hiển thị content sau page transition
   const hasSetInitialTheme = useRef(false);
   const hasShownSuccess = useRef(false); // Track xem đã hiện thông báo chưa
   const stopListeningRef = useRef<(() => void) | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
+
+  // Delay hiển thị content sau khi page transition xong (khoảng 1.5s)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowContent(true);
+    }, 1200); // Đợi animation transition xong
+    return () => clearTimeout(timer);
+  }, []);
 
   // Load flower animation
   // useEffect(() => {
@@ -187,7 +196,7 @@ export default function Page2() {
   // Force dark mode on initial mount (only once)
   useEffect(() => {
     if (!hasSetInitialTheme.current) {
-      setTheme("light");
+      setTheme("dark");
       hasSetInitialTheme.current = true;
     }
   }, [setTheme]);
@@ -236,32 +245,41 @@ export default function Page2() {
         <ThemeButton />
       </div>
 
-      {/* Nội dung màn hình mới */}
-      <main className="relative z-10 flex h-full items-center justify-center">
-        <div className="flex flex-col lg:flex-row items-center justify-center h-fit lg:mb-0 gap-10 mt-20 lg:gap-8">
-          <div className="relative flex flex-col items-center gap-8">
-            <CakeWithCandles candles={candles} resolvedTheme={resolvedTheme} />
-            <AgeNumberDisplay resolvedTheme={resolvedTheme} />
-            <BlowProgressBar
-              isListening={isListening}
-              hasPermission={hasPermission}
-              resolvedTheme={resolvedTheme}
-              blowProgress={blowProgress}
-            />
+      {/* Nội dung màn hình mới - chỉ hiện sau page transition */}
+      {showContent && (
+        <main className="relative z-10 flex h-full items-center justify-center">
+          <div className="flex flex-col lg:flex-row items-center justify-center h-fit lg:mb-0 gap-10 mt-20 lg:gap-8">
+            <div className="relative flex flex-col items-center gap-8">
+              <CakeWithCandles
+                candles={candles}
+                resolvedTheme={resolvedTheme}
+              />
+              <AgeNumberDisplay resolvedTheme={resolvedTheme} />
+              <BlowProgressBar
+                isListening={isListening}
+                hasPermission={hasPermission}
+                resolvedTheme={resolvedTheme}
+                blowProgress={blowProgress}
+              />
+            </div>
+            <div className="lg:ml-8">
+              <CardAnimation />
+            </div>
           </div>
-          <div className="lg:ml-8">
-            <CardAnimation />
-          </div>
-        </div>
-      </main>
+        </main>
+      )}
 
-      <BackButton resolvedTheme={resolvedTheme} />
-      <BlowButton
-        isListening={isListening}
-        isLoading={isLoading}
-        resolvedTheme={resolvedTheme}
-        onStartListening={startListening}
-      />
+      {showContent && (
+        <>
+          <BackButton resolvedTheme={resolvedTheme} />
+          <BlowButton
+            isListening={isListening}
+            isLoading={isLoading}
+            resolvedTheme={resolvedTheme}
+            onStartListening={startListening}
+          />
+        </>
+      )}
       <BlowSuccessModal show={showBlowSuccess} onConfirm={handleConfirmBlow} />
       <LoadingIndicator isLoading={isLoading} />
       <ErrorNotification error={error} permissionStatus={permissionStatus} />
