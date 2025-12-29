@@ -67,10 +67,10 @@ export default function CuteDoggie() {
   // Tự động chuyển từ phase 2 sang phase 3 sau khi typing xong
   useEffect(() => {
     if (phase === 2) {
-      // Ước tính thời gian typing: "Há lu, Huy nè !" có khoảng 15 ký tự
+      // Ước tính thời gian typing: "Há lu,e Huy nè !" có khoảng 15 ký tự
       // typingSpeed = 50ms, pauseDuration = 1000ms (giảm từ 2000ms)
       // Tổng thời gian: 15 * 50 + 1000 = 1750ms
-      const typingTime = "Há lu, Huy nè !".length * 50;
+      const typingTime = "Há lu,e Huy nè !".length * 50;
       const totalTime = typingTime + 1500; // pauseDuration + thời gian đọc (giảm delay)
 
       const timeout = setTimeout(() => {
@@ -143,7 +143,7 @@ export default function CuteDoggie() {
             ) : phase === 2 ? (
               <TextType
                 key={`phase-2-${textKey}`}
-                text="Há lu, Huy nè !"
+                text="Há lu, e Huy nè !"
                 as="p"
                 className="text-sm font-semibold text-pink-600 break-words"
                 style={{
