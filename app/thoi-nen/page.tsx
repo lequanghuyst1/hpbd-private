@@ -24,8 +24,45 @@ type CandlePosition = {
   y: number; // Percentage from top (0-100)
 };
 
+// Tạo 33 nến phân bố theo vòng tròn đồng tâm đều đặn
+const generateInitialCandles = (): CandlePosition[] => {
+  const candles: CandlePosition[] = [];
+  const centerX = 50; // Tâm X (%)
+  const centerY = 50; // Tâm Y (%)
+
+  // Phân bố nến theo 3 vòng tròn đồng tâm (tổng 33 nến)
+  const rings = [
+    { count: 11, radius: 38, startAngle: 0 }, // Vòng ngoài: 11 nến
+    { count: 11, radius: 25, startAngle: Math.PI / 11 }, // Vòng giữa: 11 nến, lệch góc
+    { count: 11, radius: 12, startAngle: 0 }, // Vòng trong: 11 nến
+  ];
+
+  let id = 0;
+  rings.forEach(({ count, radius, startAngle }) => {
+    for (let i = 0; i < count; i++) {
+      // Tính góc cho mỗi nến (phân bố đều)
+      const angle = startAngle + (i / count) * 2 * Math.PI;
+      // Thêm random rất nhỏ để tự nhiên hơn (±2%)
+      const randomOffset = (Math.random() - 0.5) * 4;
+      const actualRadius = radius + randomOffset;
+
+      // Tính vị trí x, y dựa trên góc và bán kính
+      const x = centerX + actualRadius * Math.cos(angle);
+      const y = centerY + actualRadius * Math.sin(angle) * 0.7; // Nhân 0.7 để làm ellipse nhìn từ trên
+
+      candles.push({
+        id: id++,
+        x: Math.max(10, Math.min(90, x)), // Clamp giữa 10-90%
+        y: Math.max(10, Math.min(90, y)), // Clamp giữa 10-90%
+      });
+    }
+  });
+
+  return candles;
+};
+
 export default function Page2() {
-  const [candles, setCandles] = useState<CandlePosition[]>([]);
+  const [candles] = useState<CandlePosition[]>(generateInitialCandles());
   const [showBlowSuccess, setShowBlowSuccess] = useState(false);
   const [isBlowConfirmed, setIsBlowConfirmed] = useState(true); // Cho phép thổi lần đầu
   const hasSetInitialTheme = useRef(false);
@@ -155,25 +192,7 @@ export default function Page2() {
     }
   }, [setTheme]);
 
-  const handleCakeSurfaceClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Giới hạn tối đa 24 nến
-    if (candles.length >= 23) {
-      return; // Không thêm nến nữa nếu đã đạt giới hạn
-    }
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    setCandles((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        x: Math.max(0, Math.min(100, x)), // Clamp between 0-100
-        y: Math.max(0, Math.min(100, y)), // Clamp between 0-100
-      },
-    ]);
-  };
+  // Không cần handleCakeSurfaceClick nữa vì đã có sẵn 33 nến
 
   const backgroundColor = resolvedTheme === "dark" ? "#212121" : undefined;
   const backgroundClass =
@@ -221,11 +240,7 @@ export default function Page2() {
       <main className="relative z-10 flex h-full items-center justify-center">
         <div className="flex flex-col lg:flex-row items-center justify-center h-fit lg:mb-0 gap-10 mt-20 lg:gap-8">
           <div className="relative flex flex-col items-center gap-8">
-            <CakeWithCandles
-              candles={candles}
-              onCakeClick={handleCakeSurfaceClick}
-              resolvedTheme={resolvedTheme}
-            />
+            <CakeWithCandles candles={candles} resolvedTheme={resolvedTheme} />
             <AgeNumberDisplay resolvedTheme={resolvedTheme} />
             <BlowProgressBar
               isListening={isListening}

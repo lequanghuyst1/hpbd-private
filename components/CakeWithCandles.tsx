@@ -14,7 +14,7 @@ type CandlePosition = {
 
 type CakeWithCandlesProps = {
   candles: CandlePosition[];
-  onCakeClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onCakeClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   resolvedTheme: string | undefined;
 };
 
@@ -62,7 +62,7 @@ const CakeWithCandles = memo(function CakeWithCandles({
           left: "50%",
           transform: "translateX(-50%)",
         }}
-        onClick={onCakeClick}
+        onClick={onCakeClick ? onCakeClick : undefined}
       >
         {/* Render các cây nến đã được thêm */}
         {candles.map((candle) => (
