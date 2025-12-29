@@ -184,10 +184,10 @@ export default function Page2() {
     // nhưng khi chuyển về dark mode và chưa có permission, nút sẽ tự hiển thị
   };
 
-  // Force light mode on initial mount (only once)
+  // Force dark mode on initial mount (only once)
   useEffect(() => {
     if (!hasSetInitialTheme.current) {
-      setTheme("light");
+      setTheme("dark");
       hasSetInitialTheme.current = true;
     }
   }, [setTheme]);
