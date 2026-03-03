@@ -4,6 +4,7 @@ import "./globals.css";
 import TransitionWrapper from "@/components/TransitionWrapper";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +58,7 @@ export default function RootLayout({
           <BackgroundMusic />
           <TransitionWrapper>{children}</TransitionWrapper>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
